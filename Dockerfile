@@ -5,4 +5,7 @@ RUN	apt-get update && apt-get install -y \
 	cmake \
 	gdb \
 	git
-WORKDIR	/workspace
+RUN	apt-get install -y \
+	protobuf-compiler
+ARG	WORKDIR
+WORKDIR	${WORKDIR}

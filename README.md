@@ -1,32 +1,24 @@
-# example-dev-container
+# example-protocol-buffer
 
-docker コンテナに VS Code で接続し、c++のプログラムをデバッグする例。
+c++で protocol buffer を使ってみる例
 
-## コンテナ
+## コードの生成
 
-ubuntu 24.04 をベースに、基本的な開発用ツールをインストール。`make`を実行すれば、イメージのビルドが走ったあとに、コンテナが起動する。
-コンテナを起動したあとに、VS Code で `Dev Containers: Attach to Running Container`を実行すれば、コンテナに接続される。
-
-## cmake
-
-プログラムのビルドに cmake を使用。関連するファイルだけ抜粋すると以下のような感じ。
-
-```
-.
-├── CMakeLists.txt
-└── src
-    ├── CMakeLists.txt
-    ├── hello.cpp
-    ├── hello.hpp
-    └── main.cpp
+```shell
+cd src
+protoc types.proto --cpp_out=.
 ```
 
-## tasks.json, launch.json
+`src`の下に、`types.pb.cc`, `types.pb.h`ができる。
 
-tasks.json に、プログラムをビルドする手順が書かれている。
+## ビルド
 
-launch.json に、デバッガを起動するための設定が書かれている。
+```shell
+cmake -S . -B build/release
+cmake --build build/release
+```
 
-[参考にしたサイト](https://motchy869.com/wordpress/2021/05/09/cmake%E3%81%A7%E3%83%93%E3%83%AB%E3%83%89%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E7%92%B0%E5%A2%83%E4%B8%8B%E3%81%A7vs-code%E3%81%A7%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E3%81%99%E3%82%8B/)
+実行ファイル`build/release/src/main`ができる。
 
-`main.cpp`を開いた状態で、`F5`を押せばデバッグが始まる。
+本来は、cmake のビルドプロセスに protocol buffers のコード生成も差し込むべきだが、方法調査は TBD。
+[参考](https://qiita.com/hotwatermorning/items/aceef2f56a7dcf33d78c)

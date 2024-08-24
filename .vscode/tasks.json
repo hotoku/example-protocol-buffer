@@ -2,19 +2,24 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "cppbuild",
+      "type": "shell",
       "label": "build debug",
       "command": "bash",
       "args": [".vscode/build-debug.bash"],
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "problemMatcher": ["$gcc"],
       "group": {
         "kind": "build",
         "isDefault": true
       },
       "detail": "Build project with debug configuration."
+    },
+    {
+      "type": "shell",
+      "label": "clean",
+      "command": "bash",
+      "args": ["-c", "rm -rf build"]
     }
   ]
 }

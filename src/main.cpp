@@ -1,9 +1,12 @@
+#include "types.pb.h"
+
 #include <iostream>
 
-#include "hello.hpp"
 
 int main(){
-    std::cout << "main" << std::endl;
-    hello();
-    return 0;
+    example_protobuf::Person person;
+    person.set_name("John Doe");
+    person.set_id(1234);
+    person.set_email("john@example.com");
+    person.PrintDebugString();
 }
